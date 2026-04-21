@@ -2,68 +2,94 @@
 
 A separate experimental Home Assistant custom integration with its own sidebar UI.
 
-This is **not** a continuation of `ha-ai-context-exporter`.
-It is a clean prototype that explores a different direction:
+This is **not** a continuation of `ha-ai-context-exporter`. It is a clean probe for a different architecture direction:
 
-- native Home Assistant integration
+- native Home Assistant custom integration
 - custom sidebar panel UI
-- admin-only access
 - strict read-only design
+- GET-only data endpoints
+- admin-only access for real Home Assistant data
+- privacy-first defaults
+- capability-based scope growth
+
+## Current version
+
+`0.2.2`
+
+## Implemented scope
+
+Phase 2 introduces the first real read-only explorer slice:
+
+- Overview
+- Entities
+- Devices
+- Areas
+- Integrations
+- Relationships
+
+The backend shapes data from Home Assistant readable in-memory sources:
+
+- state machine
+- entity registry
+- device registry
+- area registry
+- config entries
+- loaded component names
+
+It does not parse Home Assistant storage files, YAML, secrets, or local snapshots.
+
+## API
+
+All real data endpoints are `GET` only and require authenticated Home Assistant admin access:
+
+- `/api/ha_context_explorer_probe/overview`
+- `/api/ha_context_explorer_probe/entities`
+- `/api/ha_context_explorer_probe/devices`
+- `/api/ha_context_explorer_probe/areas`
+- `/api/ha_context_explorer_probe/integrations`
+- `/api/ha_context_explorer_probe/relationships`
+
+The sidebar now uses Home Assistant's native custom panel model instead of an iframe shell. The frontend is a JavaScript module custom element loaded by Home Assistant, receives the frontend `hass` object, and requests protected JSON through `hass.callApi`. Real JSON data remains protected separately by Home Assistant auth and an explicit admin check. If the frontend auth context still cannot reach the protected endpoints in a runtime, the UI shows one clear 401/403 state instead of weakening endpoint auth or repeatedly probing protected endpoints.
+
+In the user's tested Home Assistant runtime for `0.2.2`, the native panel reports `Connected / Admin data endpoint available` and the implemented protected scopes load real data. This is a tested-runtime confirmation, not a guarantee for every Home Assistant version or deployment topology.
+
+## Safety boundaries
+
+The project remains strict read-only:
+
+- no POST / PUT / PATCH / DELETE endpoints
 - no service calls
 - no state changes
-- no file writes
-- privacy-first defaults
-
-## Current scope
-
-This starter scaffold provides:
-
-- a Home Assistant custom integration skeleton
-- a sidebar panel
-- a minimal read-only HTTP API
-- a standalone frontend UI served by the integration
-- explicit architectural boundaries for future work
-
-## What it does right now
-
-- registers a sidebar entry called **Context Explorer Probe**
-- serves a small frontend app
-- exposes a read-only status endpoint
-- exposes a read-only capabilities endpoint
-- keeps all routes GET-only
-
-## What it does not do yet
-
-- no live entity export
-- no device/area/integration context loading
-- no authentication/token extension logic beyond normal HA auth requirements
-- no config flow
-- no options flow
-- no file system inspection
+- no restart controls
+- no supervisor controls
+- no writes to Home Assistant config
+- no writes to `.storage`
 - no secret access
-- no writing anywhere
+- no persistent preferences
 
-## Suggested next steps
+## Privacy
 
-1. Replace the placeholder capabilities payload with real read-only data sources.
-2. Add a compact entity browser endpoint.
-3. Add masking defaults before exposing any sensitive values.
-4. Add tabs for entities, integrations, devices, areas, and relationships.
-5. Keep all future backend routes GET-only.
+Responses use mask-first defaults for user-visible strings. Masking currently covers obvious IPv4-like values, MAC-like values, and Wi-Fi / SSID / BSSID contexts where safely detectable.
 
-## Installation (manual prototype)
+This masking is best-effort. It is not guaranteed anonymization, and users should still treat exported or copied data with care.
+
+## Future scopes
+
+Future phases may explore floors, labels, dashboards, services, and deeper logic relationships. Those scopes are not implemented in `0.2.2`, and the UI/API should describe them as unavailable or planned rather than pretending support exists.
+
+## Local reference material
+
+The `_local_reference/` directory is ignored and is not repository source of truth. It may be used only as local shaping/reference material while keeping implementation generic for different Home Assistant installations.
+
+Do not copy reference data into repository source files or docs.
+
+## Installation
 
 1. Copy `custom_components/ha_context_explorer_probe` into your Home Assistant `custom_components` directory.
 2. Restart Home Assistant.
 3. Add the integration from **Settings -> Devices & Services**.
-4. Open the new sidebar entry.
+4. Open **Context Explorer Probe** from the sidebar.
 
-## Honest limitation
+## Validation status
 
-This scaffold was created outside a live Home Assistant runtime and was not validated inside your HA instance yet.
-
-
-## 0.1.1 auth note
-- The initial 0.1.0 starter used authenticated iframe panel access and could trigger `invalid authentication` on `/ha_context_explorer_probe/panel` in Home Assistant.
-- The 0.1.1 starter temporarily serves the placeholder panel and placeholder demo endpoints without HA auth so the UI can boot inside the built-in iframe panel.
-- This is acceptable only because the current endpoints expose placeholder, non-sensitive demo data. Before wiring real Home Assistant data, auth must be hardened again with a proper panel-token/auth bridge or manual validation approach.
+See `review_bundle.md` for the focused validation record for this phase. Local validation does not replace testing inside a live Home Assistant runtime.
