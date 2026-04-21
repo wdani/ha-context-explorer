@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Context Explorer Probe</title>
+    <link rel="stylesheet" href="/local/ha_context_explorer_probe/styles.css?v={{VERSION}}" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">Context Explorer Probe</div>
+        <div class="pill">HA-integrated experiment</div>
+        <nav>
+          <button class="nav-item active">Overview</button>
+          <button class="nav-item" disabled>Entities</button>
+          <button class="nav-item" disabled>Devices</button>
+          <button class="nav-item" disabled>Areas</button>
+          <button class="nav-item" disabled>Integrations</button>
+          <button class="nav-item" disabled>Relationships</button>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <header class="hero">
+          <h1>Read-only Home Assistant explorer prototype</h1>
+          <p>
+            Separate experiment with native HA sidebar integration and a custom UI.
+            This starter intentionally exposes only safe placeholder endpoints.
+          </p>
+        </header>
+
+        <section class="grid">
+          <article class="card">
+            <h2>Status</h2>
+            <pre id="status">Loading status…</pre>
+          </article>
+          <article class="card">
+            <h2>Capabilities</h2>
+            <pre id="capabilities">Loading capabilities…</pre>
+          </article>
+        </section>
+
+        <section class="card">
+          <h2>Design rules</h2>
+          <ul>
+            <li>GET-only backend endpoints</li>
+            <li>No service calls</li>
+            <li>No state changes</li>
+            <li>No file writing</li>
+            <li>Privacy-first defaults</li>
+          </ul>
+        </section>
+      </main>
+    </div>
+
+    <script src="/local/ha_context_explorer_probe/app.js?v={{VERSION}}"></script>
+  </body>
+</html>
