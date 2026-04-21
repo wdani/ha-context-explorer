@@ -9,6 +9,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from aiohttp import web
 
+from .api import register_api_views
 from .const import DOMAIN, NAME, PANEL_URL, STATIC_URL, VERSION
 
 
@@ -27,61 +28,6 @@ class ProbePanelView(HomeAssistantView):
         return web.Response(text=text.replace("{{VERSION}}", VERSION), content_type="text/html")
 
 
-class ProbeStatusView(HomeAssistantView):
-    """Read-only status endpoint."""
-
-    url = f"/api/{DOMAIN}/status"
-    name = f"api:{DOMAIN}:status"
-    requires_auth = False
-
-    async def get(self, request: web.Request) -> web.Response:
-        return self.json(
-            {
-                "ok": True,
-                "mode": "read_only_probe",
-                "domain": DOMAIN,
-                "version": VERSION,
-                "writes_enabled": False,
-                "service_calls_enabled": False,
-                "state_changes_enabled": False,
-            }
-        )
-
-
-class ProbeCapabilitiesView(HomeAssistantView):
-    """Read-only capabilities endpoint."""
-
-    url = f"/api/{DOMAIN}/capabilities"
-    name = f"api:{DOMAIN}:capabilities"
-    requires_auth = False
-
-    async def get(self, request: web.Request) -> web.Response:
-        return self.json(
-            {
-                "ui": {
-                    "sidebar": True,
-                    "custom_panel": True,
-                    "mobile_ready": True,
-                },
-                "safety": {
-                    "read_only": True,
-                    "get_only": True,
-                    "filesystem_writes": False,
-                    "service_calls": False,
-                    "state_mutation": False,
-                    "sensitive_defaults": "mask_first",
-                },
-                "planned_scopes": [
-                    "entities",
-                    "devices",
-                    "areas",
-                    "integrations",
-                    "relationships",
-                ],
-            }
-        )
-
-
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     """Set up the integration base."""
     hass.data.setdefault(DOMAIN, {})
@@ -95,8 +41,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     html_path = hass.config.path("custom_components", DOMAIN, "www", "panel.html")
     hass.http.register_view(ProbePanelView(html_path))
-    hass.http.register_view(ProbeStatusView())
-    hass.http.register_view(ProbeCapabilitiesView())
+    register_api_views(hass)
 
     static_path = str(hass.config.path("custom_components", DOMAIN, "www"))
     if hasattr(hass.http, "async_register_static_paths"):

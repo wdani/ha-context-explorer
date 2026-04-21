@@ -8,48 +8,95 @@
   </head>
   <body>
     <div class="app-shell">
-      <aside class="sidebar">
-        <div class="brand">Context Explorer Probe</div>
-        <div class="pill">HA-integrated experiment</div>
-        <nav>
-          <button class="nav-item active">Overview</button>
-          <button class="nav-item" disabled>Entities</button>
-          <button class="nav-item" disabled>Devices</button>
-          <button class="nav-item" disabled>Areas</button>
-          <button class="nav-item" disabled>Integrations</button>
-          <button class="nav-item" disabled>Relationships</button>
-        </nav>
-      </aside>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Context Explorer Probe</p>
+          <h1>Home Assistant Context</h1>
+        </div>
+        <div class="status-chip" aria-live="polite">
+          <span id="data-state-label">Loading</span>
+          <small id="data-state-detail">Preparing data views</small>
+        </div>
+      </header>
 
-      <main class="content">
-        <header class="hero">
-          <h1>Read-only Home Assistant explorer prototype</h1>
-          <p>
-            Separate experiment with native HA sidebar integration and a custom UI.
-            This starter intentionally exposes only safe placeholder endpoints.
-          </p>
-        </header>
+      <nav class="tabbar" aria-label="Explorer views">
+        <button class="tab-button active" type="button" data-scope="overview">Overview</button>
+        <button class="tab-button" type="button" data-scope="entities">Entities</button>
+        <button class="tab-button" type="button" data-scope="devices">Devices</button>
+        <button class="tab-button" type="button" data-scope="areas">Areas</button>
+        <button class="tab-button" type="button" data-scope="integrations">Integrations</button>
+        <button class="tab-button" type="button" data-scope="relationships">Relationships</button>
+      </nav>
 
-        <section class="grid">
-          <article class="card">
-            <h2>Status</h2>
-            <pre id="status">Loading status…</pre>
-          </article>
-          <article class="card">
-            <h2>Capabilities</h2>
-            <pre id="capabilities">Loading capabilities…</pre>
-          </article>
+      <main class="workspace">
+        <section class="view active" id="view-overview">
+          <div class="section-heading">
+            <h2>Overview</h2>
+            <span class="version">v{{VERSION}}</span>
+          </div>
+          <div class="metric-grid" id="overview-counts" data-loading-target>Loading</div>
+          <div class="two-column">
+            <section>
+              <h3>Warnings</h3>
+              <div class="stack" id="overview-warnings">Loading</div>
+            </section>
+            <section>
+              <h3>Future scopes</h3>
+              <div class="stack" id="future-scopes">Loading</div>
+            </section>
+          </div>
         </section>
 
-        <section class="card">
-          <h2>Design rules</h2>
-          <ul>
-            <li>GET-only backend endpoints</li>
-            <li>No service calls</li>
-            <li>No state changes</li>
-            <li>No file writing</li>
-            <li>Privacy-first defaults</li>
-          </ul>
+        <section class="view" id="view-entities">
+          <div class="section-heading">
+            <h2>Entities</h2>
+            <span class="count-label" id="entities-count">0 items</span>
+          </div>
+          <div class="toolbar">
+            <label>
+              <span>Search</span>
+              <input id="entities-search" type="search" autocomplete="off" />
+            </label>
+            <label>
+              <span>Domain</span>
+              <select id="entities-domain">
+                <option value="">All domains</option>
+              </select>
+            </label>
+          </div>
+          <div class="list" id="entities-list" data-loading-target>Loading</div>
+        </section>
+
+        <section class="view" id="view-devices">
+          <div class="section-heading">
+            <h2>Devices</h2>
+            <span class="count-label" id="devices-count">0 items</span>
+          </div>
+          <div class="list" id="devices-list" data-loading-target>Loading</div>
+        </section>
+
+        <section class="view" id="view-areas">
+          <div class="section-heading">
+            <h2>Areas</h2>
+            <span class="count-label" id="areas-count">0 items</span>
+          </div>
+          <div class="list" id="areas-list" data-loading-target>Loading</div>
+        </section>
+
+        <section class="view" id="view-integrations">
+          <div class="section-heading">
+            <h2>Integrations</h2>
+            <span class="count-label" id="integrations-count">0 items</span>
+          </div>
+          <div class="list" id="integrations-list" data-loading-target>Loading</div>
+        </section>
+
+        <section class="view" id="view-relationships">
+          <div class="section-heading">
+            <h2>Relationships</h2>
+          </div>
+          <div class="metric-grid" id="relationships-summary" data-loading-target>Loading</div>
+          <div class="relationship-lists" id="relationships-lists"></div>
         </section>
       </main>
     </div>
