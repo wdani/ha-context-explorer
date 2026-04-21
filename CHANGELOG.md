@@ -7,6 +7,8 @@
 - Switched protected JSON requests from raw same-origin `fetch` to `hass.callApi`.
 - Removed the unused panel HTML request path while keeping the existing no-spam 401/403 failure state.
 - Kept all real JSON endpoints authenticated and admin-only.
+- Confirmed in the user's tested Home Assistant runtime that the native panel loads protected data for overview, entities, devices, areas, integrations, and relationships.
+- Confirmed the previous iframe-style invalid-auth failure is no longer the active observed behavior in the tested runtime.
 - Bumped the integration version to `0.2.2`.
 
 ## 0.2.1

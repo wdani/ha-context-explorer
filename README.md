@@ -51,6 +51,8 @@ All real data endpoints are `GET` only and require authenticated Home Assistant 
 
 The sidebar now uses Home Assistant's native custom panel model instead of an iframe shell. The frontend is a JavaScript module custom element loaded by Home Assistant, receives the frontend `hass` object, and requests protected JSON through `hass.callApi`. Real JSON data remains protected separately by Home Assistant auth and an explicit admin check. If the frontend auth context still cannot reach the protected endpoints in a runtime, the UI shows one clear 401/403 state instead of weakening endpoint auth or repeatedly probing protected endpoints.
 
+In the user's tested Home Assistant runtime for `0.2.2`, the native panel reports `Connected / Admin data endpoint available` and the implemented protected scopes load real data. This is a tested-runtime confirmation, not a guarantee for every Home Assistant version or deployment topology.
+
 ## Safety boundaries
 
 The project remains strict read-only:

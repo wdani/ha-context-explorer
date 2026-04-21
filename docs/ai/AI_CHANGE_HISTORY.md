@@ -14,9 +14,24 @@ Key changes:
 
 Honest current state:
 
-- This is the smallest safe bridge candidate because Home Assistant custom panels receive the `hass` object and the frontend manages authentication for panel code.
-- Local static validation cannot prove live Home Assistant behavior in this environment.
+- This is the smallest safe bridge because Home Assistant custom panels receive the `hass` object and the frontend manages authentication for panel code.
+- User runtime validation confirms the native panel loads protected data for overview, entities, devices, areas, integrations, and relationships.
+- User runtime validation confirms the previous iframe-style invalid-auth failure is no longer the active observed behavior.
 - If auth still fails in a runtime, the UI keeps the one-shot protected-data failure state and endpoint auth remains protected.
+- Compatibility is confirmed in the user's tested Home Assistant runtime, not universally guaranteed across every HA runtime.
+
+## 0.2.2 documentation alignment
+
+After successful local Home Assistant runtime validation, documentation and review artifacts were aligned to record the working native panel auth bridge.
+
+Recorded observations:
+
+- Panel showed `Connected / Admin data endpoint available`.
+- Overview loaded real counts.
+- Entities, devices, areas, integrations, and relationships loaded real data.
+- The earlier iframe invalid-auth behavior was no longer observed in the tested runtime.
+
+No code behavior, endpoint security, data shaping, privacy model, or frontend architecture was changed in this documentation alignment step.
 
 ## 0.2.1
 

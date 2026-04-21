@@ -25,6 +25,16 @@
 - Global frontend protected-data failure state for 401/403 auth failures
 - Documentation and review baseline
 
+## Confirmed Runtime State
+
+In the user's tested Home Assistant runtime on the current working branch:
+
+- The native custom panel loads successfully.
+- The panel reports `Connected / Admin data endpoint available`.
+- Overview loads real counts.
+- Entities, devices, areas, integrations, and relationships load real items/link sets.
+- The previous iframe-style invalid-auth failure is no longer the active observed behavior.
+
 ## Not implemented
 
 - Floors full implementation
@@ -35,6 +45,6 @@
 - Write settings or saved preferences
 - Any mutation feature
 
-## Known validation gap
+## Remaining Validation Caveat
 
-Local syntax and static checks are useful, but live Home Assistant runtime testing is still required to confirm whether the native custom panel auth context can access admin-only JSON endpoints in each deployment. If it cannot, the current UI fails once and explains the protected-data failure without weakening endpoint auth.
+The native panel auth bridge is confirmed in the user's tested runtime. It is not yet guaranteed across every Home Assistant version, frontend build mode, or deployment topology. If auth fails elsewhere, the UI still fails once and explains the protected-data failure without weakening endpoint auth.

@@ -4,7 +4,7 @@
 
 Task: `resolve-panel-auth-bridge`
 
-Result: native panel auth bridge candidate implemented; live HA behavior still must be confirmed in the user's runtime.
+Result: native panel auth bridge implemented and confirmed working in the user's tested Home Assistant runtime.
 
 - Replaced iframe built-in panel registration with `panel_custom.async_register_panel`.
 - Registered `ha-context-explorer-probe-panel` as a JavaScript module custom element.
@@ -14,7 +14,37 @@ Result: native panel auth bridge candidate implemented; live HA behavior still m
 - Real JSON endpoints still set `requires_auth = True`.
 - Real JSON endpoints still enforce admin access with `request["hass_user"].is_admin`.
 - The frontend keeps the one-shot protected-data failure state if the custom panel auth context is still rejected.
-- This local environment does not include Home Assistant, so live Overview/data-tab loading and invalid-auth log behavior could not be verified here.
+- User runtime validation confirms the native panel can access protected JSON data without the previously observed iframe-style auth failure.
+- This remains confirmed for the user's tested Home Assistant runtime, not a universal compatibility guarantee across all Home Assistant versions or deployment shapes.
+
+### 0.2.2 local live runtime validation
+
+Confirmed by the user in their Home Assistant runtime on the working branch:
+
+- Native custom panel loads successfully.
+- Panel reports `Connected / Admin data endpoint available`.
+- Overview loads real counts.
+- Entities loads real items.
+- Devices loads real items.
+- Areas loads real items.
+- Integrations loads real items.
+- Relationships loads real items.
+- The previous iframe-style invalid-auth failure is no longer the active observed behavior in this tested runtime.
+
+Remaining caveat:
+
+- This validation is runtime-real for the user's tested environment, but not yet proven across every Home Assistant version, frontend build mode, or deployment topology.
+
+### 0.2.2 documentation alignment validation
+
+Docs were updated after successful user runtime testing to remove stale provisional-auth-bridge framing.
+
+Confirmed in this documentation pass:
+
+- `review_bundle.md`, `CHANGELOG.md`, `README.md`, and AI docs describe 0.2.2 as working in the user's tested Home Assistant runtime.
+- The docs distinguish tested-runtime success from universal compatibility.
+- Historical notes for 0.2.0 and 0.2.1 remain intact.
+- No source code behavior changes were made for this documentation alignment pass.
 
 ### 0.2.2 validation commands
 
@@ -91,11 +121,12 @@ Result:
 homeassistant available: False
 ```
 
-Live HA validation still needs to be run in the user's Home Assistant instance:
+Live HA validation status:
 
-- whether Overview now loads real data
-- whether the invalid-auth warning disappeared
-- whether all protected tabs load
+- User runtime testing confirms Overview loads real data.
+- User runtime testing confirms all implemented protected tabs load real data.
+- User runtime testing confirms the previous invalid-auth failure is no longer the current observed outcome.
+- This sandbox still cannot independently run Home Assistant because `homeassistant available: False`.
 
 ## 0.2.1 follow-up review
 
@@ -217,7 +248,7 @@ Result: pass with live-runtime caveat.
 - Real data routes are registered as `GET` handlers only.
 - JSON data endpoints set `requires_auth = True`.
 - JSON data endpoints explicitly require `request["hass_user"].is_admin`.
-- The panel shell remains boot-compatible, but it does not return real data.
+- The native custom panel loads real data through Home Assistant's frontend auth context in the user's tested runtime.
 - No service calls were added.
 - No service registration was added.
 - No POST / PUT / PATCH / DELETE handlers were added.
@@ -304,7 +335,9 @@ Result:
 No matches.
 ```
 
-### Frontend asset and auth sanity
+### Historical 0.2.0 frontend asset and auth sanity
+
+This section records the original 0.2.0 validation at the time it was performed. It is superseded for current runtime behavior by the 0.2.2 native custom panel validation above.
 
 Commands confirmed:
 
@@ -321,7 +354,7 @@ fetch(`${API_BASE}/${scope}`, { credentials: "same-origin" })
 
 ### Version alignment
 
-Confirmed `0.2.0` in:
+At the time of the original Phase-2 review, `0.2.0` was confirmed in:
 
 - `custom_components/ha_context_explorer_probe/const.py`
 - `custom_components/ha_context_explorer_probe/manifest.json`
@@ -329,9 +362,9 @@ Confirmed `0.2.0` in:
 - `CHANGELOG.md`
 - `docs/ai/AI_CURRENT_STATE.md`
 
-Historical `0.1.1` and `0.1.0` references remain only in changelog/change-history context.
+Current version alignment is covered by the newer 0.2.2 review section above. Historical `0.1.1`, `0.1.0`, and prior corrective-version references remain only in changelog/change-history/review context.
 
-### Home Assistant runtime caveat
+### Historical Home Assistant runtime caveat
 
 Command:
 
@@ -345,4 +378,4 @@ Result:
 homeassistant available: False
 ```
 
-Full live runtime behavior still needs validation inside Home Assistant, especially iframe auth behavior and current registry object compatibility.
+This was the 0.2.0 local-sandbox caveat before live runtime testing and before the native custom panel bridge. Current 0.2.2 behavior is confirmed working in the user's tested Home Assistant runtime for the implemented scopes, while universal compatibility across all HA environments remains unproven.
