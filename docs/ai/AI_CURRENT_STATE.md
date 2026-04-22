@@ -29,6 +29,7 @@
 - Session-only raw identifier reveal toggle
 - Global frontend protected-data failure state for 401/403 auth failures
 - Native custom panel lifecycle hardening for reconnect/remount/internal navigation cases
+- Minimal HACS custom-repository metadata starter through root `hacs.json`
 - Documentation and review baseline
 
 ## Confirmed Runtime State
@@ -56,7 +57,12 @@ The `0.3.0` logic slice remains the current logic behavior. Version `0.3.1` adds
 - Service exploration beyond future planning
 - Write settings or saved preferences
 - Any mutation feature
+- HACS default-store submission
+- Full release automation or update-channel validation
+- Brand asset/default-store readiness
 
 ## Remaining Validation Caveat
 
 The native panel auth bridge is confirmed in the user's tested runtime. It is not yet guaranteed across every Home Assistant version, frontend build mode, or deployment topology. The 0.3.1 lifecycle hardening is intended to prevent blank panels after internal navigation or remounts, but live runtime confirmation remains separate from sandbox validation. If auth fails elsewhere, the UI still fails once and explains the protected-data failure without weakening endpoint auth.
+
+Distribution/update status is also intentionally early. The repo now has minimal HACS custom-repository metadata and clearer README wording, but it is not yet a proven release-based update channel and has not been submitted to the HACS default store.

@@ -1,5 +1,102 @@
 # Review Bundle
 
+## Distribution-readiness starter review
+
+Task: HACS-style custom repository readiness starter.
+
+Result: minimal repository metadata and documentation update implemented.
+
+- Added root `hacs.json` with a HACS display name and `render_readme`.
+- Clarified README installation/update wording for:
+  - manual local install
+  - future HACS custom-repository usage
+  - release/tag-based updates as the intended future direction
+- Updated AI project/current-state/change-history/architecture docs to record the distribution direction.
+- Kept current integration version at `0.3.1`; this is metadata/documentation readiness, not a runtime release.
+- No backend features, UI features, source readers, endpoint URLs, auth behavior, persistent settings, or write capabilities were changed.
+
+### Why this is enough for this step
+
+HACS publisher documentation describes root `hacs.json` as the repository metadata file and integration repositories as using the standard `custom_components/<domain>/` layout. This repo already has a single integration under `custom_components/ha_context_explorer_probe` and a manifest with the required integration metadata, so the smallest useful starter step is to add minimal root HACS metadata and make the README honest about the intended custom-repository/release path.
+
+### Still intentionally not done
+
+- No HACS default-store submission.
+- No release automation or CI expansion.
+- No brand assets/default-store readiness pass.
+- No hot reload or frontend live-refresh work.
+- No explorer feature, backend, auth, or data-access changes.
+- No claim that HACS install/update behavior has been fully validated in a live Home Assistant runtime.
+
+### Validation
+
+HACS metadata JSON:
+
+```powershell
+python -c "import json, pathlib; json.loads(pathlib.Path('hacs.json').read_text(encoding='utf-8')); print('hacs JSON OK')"
+```
+
+Result:
+
+```text
+hacs JSON OK
+```
+
+Manifest JSON:
+
+```powershell
+python -c "import json, pathlib; json.loads(pathlib.Path('custom_components/ha_context_explorer_probe/manifest.json').read_text(encoding='utf-8')); print('manifest JSON OK')"
+```
+
+Result:
+
+```text
+manifest JSON OK
+```
+
+Repository layout check:
+
+```powershell
+Get-ChildItem -Path custom_components -Directory
+Test-Path custom_components\ha_context_explorer_probe\manifest.json
+```
+
+Result:
+
+```text
+One integration directory is present under custom_components, and its manifest exists.
+```
+
+Runtime safety scan:
+
+```powershell
+Get-ChildItem -Path custom_components\ha_context_explorer_probe -Recurse -File | Select-String -Pattern "def post|def put|def patch|def delete|hass\.services\.async_call|async_register_service|register_admin_service|\.async_set\(|\.storage|secrets\.yaml|localStorage|sessionStorage|Authorization|Bearer"
+```
+
+Result:
+
+```text
+No matches.
+```
+
+Version check:
+
+```powershell
+Get-Content -Path custom_components\ha_context_explorer_probe\const.py,custom_components\ha_context_explorer_probe\manifest.json,custom_components\ha_context_explorer_probe\www\app.js | Select-String -Pattern "0\.3\.1"
+```
+
+Result:
+
+```text
+Runtime version metadata remains 0.3.1.
+```
+
+### Assumptions and uncertainty
+
+- This starter follows HACS publisher documentation that root `hacs.json` provides repository display/path metadata and that GitHub releases are preferred for update selection.
+- The repo has not yet validated HACS install/update behavior in a live Home Assistant runtime.
+- Release/tag naming, release notes, HACS validation actions, brand assets, and possible default-store requirements remain future work.
+
 ## 0.3.1 lifecycle bugfix review
 
 Task: `fix-panel-lifecycle-blank-screen`

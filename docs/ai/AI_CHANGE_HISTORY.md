@@ -1,5 +1,19 @@
 # AI Change History
 
+## Unreleased
+
+First small distribution-readiness starter step.
+
+Key changes:
+
+- Added root `hacs.json` with minimal HACS display metadata.
+- Clarified README install/update wording for manual install, future HACS custom-repository use, and release/tag-based update intent.
+- Documented that this is not HACS default-store submission, not full release automation, and not a proven update channel.
+
+Important boundaries kept:
+
+- No runtime behavior, endpoint URLs, auth checks, backend readers, frontend views, persistent settings, service calls, mutation handlers, config writes, `.storage` access, secret access, or version metadata changed.
+
 ## 0.3.1
 
 Focused native custom-panel lifecycle robustness pass.

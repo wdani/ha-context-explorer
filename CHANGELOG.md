@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Added minimal root `hacs.json` metadata for HACS-style custom repository readiness.
+- Clarified README installation/update wording for manual install, future HACS custom-repository use, and release/tag-based update intent.
+- Updated project/review docs to record this as a distribution-readiness starter step.
+- Kept runtime behavior, endpoint security, data access, implemented scopes, and version `0.3.1` unchanged.
+
 ## 0.3.1
 
 - Hardened the native custom panel lifecycle against Home Assistant internal navigation, remount, and reconnect cases.

@@ -46,3 +46,7 @@ The Logic tab renders source coverage before logic rows so users can distinguish
 ## Capability model
 
 Implemented scopes are exposed explicitly. Future scopes are reported as unavailable/not implemented rather than faked.
+
+## Distribution metadata
+
+The root `hacs.json` is repository metadata for HACS-style custom repository readiness. It does not participate in Home Assistant runtime setup, does not add backend routes, and does not change the read-only integration architecture.

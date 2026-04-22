@@ -37,4 +37,13 @@ The logic slice currently reads only canonical `automations.yaml` and `scripts.y
 
 The 0.3.1 lifecycle hardening is a frontend robustness fix for Home Assistant internal navigation, reconnect, and remount cases. It does not expand data scope or change endpoint security.
 
+## Distribution direction
+
+The repository now includes a minimal root `hacs.json` so it can begin moving toward HACS-style custom repository readiness. This is intentionally only a starter step:
+
+- manual local install remains the clearest supported path
+- future HACS usage should be custom-repository oriented first, not default-store submission
+- future updates should be release/tag based once that flow is proven
+- repository metadata does not change runtime behavior, endpoint security, or data access
+
 Future scope may include floors, labels, dashboards, services, package/include logic layouts, full template dependency coverage, graph visualization, and deeper execution/context modeling, but those remain planned and unavailable in this phase.

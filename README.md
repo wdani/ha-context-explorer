@@ -95,12 +95,24 @@ The `_local_reference/` directory is ignored and is not repository source of tru
 
 Do not copy reference data into repository source files or docs.
 
-## Installation
+## Installation and update path
+
+Manual local installation remains the clearest supported path while this probe is still moving in small reviewable steps:
 
 1. Copy `custom_components/ha_context_explorer_probe` into your Home Assistant `custom_components` directory.
 2. Restart Home Assistant.
 3. Add the integration from **Settings -> Devices & Services**.
 4. Open **Context Explorer Probe** from the sidebar.
+
+The repository now includes minimal HACS custom-repository metadata through `hacs.json`. This is a starter step toward HACS-style installation and update tracking, not a claim that the project is already a fully validated HACS update channel or accepted default-store integration.
+
+Intended future HACS-style flow:
+
+1. Add this GitHub repository to HACS as a custom repository of type **Integration**.
+2. Install the integration through HACS, which places integration files under Home Assistant `custom_components/`.
+3. Use GitHub releases/tags aligned with the integration version as the future update signal.
+
+Until release/tag handling is proven for this project, manual replacement plus a Home Assistant restart remains the most explicit update path. HACS default-store submission, release automation, brand assets, and full update-channel validation are not part of the current implementation.
 
 ## Validation status
 
