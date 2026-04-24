@@ -1,4 +1,4 @@
-# HA Context Explorer Probe
+# HA Context Explorer
 
 A separate experimental Home Assistant custom integration with its own sidebar UI.
 
