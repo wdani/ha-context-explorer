@@ -12,6 +12,9 @@ Key changes:
   - `docs/assets/ha-context-explorer-icon.png`
   - `custom_components/ha_context_explorer_probe/brand/icon.png`
   - `custom_components/ha_context_explorer_probe/brand/logo.png`
+- Switched the README logo from a relative path to a raw GitHub URL after live HACS testing showed the relative image did not render.
+- Recorded live HACS custom repository observations: the custom repository can be added, is available for download, README text renders, the Home Assistant integration/repairs UI shows the local icon, and the HACS list/card icon remains pending validation.
+- Recorded the observed browser console `styles.css` MIME warning as a caveat; no stale unused stylesheet reference was found in this pass.
 - Updated integration manifest documentation and issue tracker URLs to `wdani/ha-context-explorer`.
 - Clarified README manual install, HACS custom repository test path, manual updates, and future GitHub-release-based update direction.
 - Added a manual HACS custom repository test checklist.
