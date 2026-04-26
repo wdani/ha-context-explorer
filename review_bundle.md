@@ -6,6 +6,16 @@ Task: combined HACS custom repository, provisional branding, local integration b
 
 Result: minimal metadata, provisional brand assets, repository presentation, and documentation cleanup only. No Explorer data/runtime behavior changed and the integration version remains `0.4.1`.
 
+Live HACS custom repository observations:
+
+- The repository can be added as a HACS custom repository.
+- HACS shows the repository as available for download.
+- HACS renders the README text.
+- The previous relative README logo path rendered as broken image alt text only; README now uses an absolute raw GitHub URL for the logo.
+- HACS list/card presentation still showed "icon not available"; this remains pending HACS presentation validation.
+- Home Assistant's own integration/repairs UI shows the local integration icon in the tested runtime.
+- A browser console warning was observed for `/local/ha_context_explorer_probe/styles.css?...` with MIME type `application/octet-stream`; no Home Assistant runtime error was reported for the HA Context Explorer panel itself.
+
 Repository/distribution readiness findings addressed across the distribution passes:
 
 - Repository structure already matches the basic HACS integration layout: one integration under `custom_components/`.
@@ -26,11 +36,13 @@ What changed:
 - Updated `manifest.json` documentation and issue tracker URLs to `https://github.com/wdani/ha-context-explorer`.
 - Clarified README manual install, HACS custom repository test path, manual update, and future GitHub-release-based update direction.
 - Added the provisional README logo from `docs/assets/ha-context-explorer-logo.png`.
+- Switched the README logo element to `https://raw.githubusercontent.com/wdani/ha-context-explorer/main/docs/assets/ha-context-explorer-logo.png` so HACS can resolve it.
 - Added a derived docs icon at `docs/assets/ha-context-explorer-icon.png`.
 - Added provisional local integration brand assets:
   - `custom_components/ha_context_explorer_probe/brand/icon.png`
   - `custom_components/ha_context_explorer_probe/brand/logo.png`
 - Added a HACS custom repository test checklist.
+- Updated the HACS checklist with live custom repository observations and the remaining list/card icon and stylesheet MIME caveats.
 - Added a future release/tag workflow checklist.
 - Updated changelog and AI docs to record this as a distribution-readiness starter.
 
@@ -42,6 +54,7 @@ HACS readiness status:
   - HACS docs require/expect a known repository structure and root `hacs.json`.
   - Current HACS integration docs also describe brand assets as required; this task adds local brand assets, but does not validate HACS or Home Assistant UI rendering in every target runtime.
   - Home Assistant 2026.3 and newer can use local custom integration brand assets from the integration `brand/` directory; older behavior may still depend on Home Assistant Brands or HACS-specific presentation.
+  - No clearly documented HACS-specific `hacs.json` key for a custom list/card icon was found; the HACS list/card "icon not available" state remains pending live validation or future Home Assistant Brands/default-store work.
   - GitHub releases are preferred but not required; this task did not create a release or tag.
   - Default-store submission has additional requirements and is explicitly out of scope.
 
@@ -87,6 +100,18 @@ Result:
 
 ```text
 hacs.json and manifest.json parse successfully.
+```
+
+README logo rendering fix:
+
+```powershell
+Select-String -Path README.md -Pattern 'raw.githubusercontent.com/wdani/ha-context-explorer/main/docs/assets/ha-context-explorer-logo.png'
+```
+
+Result:
+
+```text
+README logo now uses an absolute raw GitHub URL instead of the previous relative image path.
 ```
 
 Logo and brand assets:
@@ -135,6 +160,22 @@ Result:
 
 ```text
 Only the existing Developer Workbench browser-local enable flag uses localStorage, and only the sanitizer's sensitive-key regex contains the literal words authorization/bearer. No service calls, mutation handlers, .storage access, secrets.yaml access, token scraping, sessionStorage, Authorization/Bearer usage, or fetch() calls were found.
+```
+
+Stylesheet MIME warning investigation:
+
+```powershell
+Get-ChildItem -Path . -Recurse -File | Where-Object { $_.FullName -notmatch '\\.git\\' } | Select-String -Pattern 'styles\.css|/local/ha_context_explorer_probe/styles\.css' -CaseSensitive:$false
+Get-ChildItem -Path custom_components\ha_context_explorer_probe\www -File | Select-Object Name,Length
+```
+
+Result:
+
+```text
+Active stylesheet references remain in custom_components/ha_context_explorer_probe/www/app.js for the normal panel shell and lifecycle fallback shells.
+custom_components/ha_context_explorer_probe/www/styles.css exists.
+No obsolete panel.html/link reference was found in the active source tree.
+The live MIME warning therefore looks more likely to be a Home Assistant static path serving/cache/runtime issue than an obviously stale unused reference. No runtime change was made in this pass.
 ```
 
 Reference-data safety:
