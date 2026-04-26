@@ -1,10 +1,10 @@
 # Review Bundle
 
-## Distribution/update-readiness starter review
+## Distribution/update-readiness starter and finalize review
 
-Task: first small HACS custom repository and release/update documentation readiness pass after the merged 0.4.1 Developer Workbench foundation.
+Task: first small HACS custom repository, repository presentation, and release/update documentation readiness pass after the merged 0.4.1 Developer Workbench foundation.
 
-Result: minimal metadata and documentation cleanup only. No runtime behavior changed and the integration version remains `0.4.1`.
+Result: minimal metadata, repository presentation, and documentation cleanup only. No runtime behavior changed and the integration version remains `0.4.1`.
 
 Repository/distribution readiness issues found:
 
@@ -13,7 +13,8 @@ Repository/distribution readiness issues found:
 - The manifest still pointed documentation and issue tracker URLs at the old `ha-context-explorer-probe` repository.
 - No root `hacs.json` existed, even though current HACS docs describe it as the root metadata file for HACS UI/path behavior.
 - No `info.md` exists, so rendering README through `hacs.json` is the smallest reasonable starter metadata choice.
-- No brand assets, HACS validation action, Hassfest action, GitHub release, or tag were added in this task.
+- A provisional project logo exists at `docs/assets/ha-context-explorer-logo.png`.
+- No complete Home Assistant/HACS brand asset set, HACS validation action, Hassfest action, GitHub release, or tag was added in this task.
 
 What changed:
 
@@ -22,6 +23,9 @@ What changed:
   - `render_readme`: `true`
 - Updated `manifest.json` documentation and issue tracker URLs to `https://github.com/wdani/ha-context-explorer`.
 - Clarified README manual install, HACS custom repository test path, manual update, and future GitHub-release-based update direction.
+- Added the provisional README logo from `docs/assets/ha-context-explorer-logo.png`.
+- Added a HACS custom repository test checklist.
+- Added a future release/tag workflow checklist.
 - Updated changelog and AI docs to record this as a distribution-readiness starter.
 
 HACS readiness status:
@@ -30,7 +34,7 @@ HACS readiness status:
 - Full HACS readiness is still not claimed.
 - Current uncertainty/reminders:
   - HACS docs require/expect a known repository structure and root `hacs.json`.
-  - Current HACS integration docs also describe brand assets as required; this task did not add brand assets.
+  - Current HACS integration docs also describe brand assets as required; this task added repository presentation logo usage, but did not validate a complete integration brand asset set.
   - GitHub releases are preferred but not required; this task did not create a release or tag.
   - Default-store submission has additional requirements and is explicitly out of scope.
 
@@ -50,7 +54,7 @@ Get-Content -Path .git\HEAD
 Result:
 
 ```text
-ref: refs/heads/distribution/update-readiness-step
+ref: refs/heads/distribution-release-hacs-polish
 ```
 
 Repository structure:
@@ -78,6 +82,14 @@ Result:
 hacs.json and manifest.json parse successfully.
 ```
 
+Logo asset:
+
+Result:
+
+```text
+docs/assets/ha-context-explorer-logo.png - 1024x1024
+```
+
 Version alignment:
 
 ```powershell
@@ -93,13 +105,13 @@ Integration version remains 0.4.1 in constants and manifest.
 Safety scan:
 
 ```powershell
-Select-String -Path custom_components\ha_context_explorer_probe\**\* -Pattern 'def post|def put|def patch|def delete|async def post|async def put|async def patch|async def delete|hass\.services\.async_call|async_register_service|register_admin_service|\.async_set\(|\.storage|secrets\.yaml|hassTokens|sessionStorage|Authorization|Bearer|fetch\(' -CaseSensitive:$false
+Select-String -Path custom_components\ha_context_explorer_probe\**\* -Pattern 'def post|def put|def patch|def delete|async def post|async def put|async def patch|async def delete|hass\.services\.async_call|async_register_service|register_admin_service|\.async_set\(|\.storage|secrets\.yaml|hassTokens|localStorage|sessionStorage|Authorization|Bearer|fetch\(' -CaseSensitive:$false
 ```
 
 Result:
 
 ```text
-Only the sanitizer's sensitive-key regex contains the literal words authorization/bearer. No service calls, mutation handlers, .storage access, secrets.yaml access, token scraping, sessionStorage, Authorization/Bearer usage, or fetch() calls were found.
+Only the existing Developer Workbench browser-local enable flag uses localStorage, and only the sanitizer's sensitive-key regex contains the literal words authorization/bearer. No service calls, mutation handlers, .storage access, secrets.yaml access, token scraping, sessionStorage, Authorization/Bearer usage, or fetch() calls were found.
 ```
 
 Reference-data safety:

@@ -1,5 +1,9 @@
 # HA Context Explorer
 
+<p align="center">
+  <img src="docs/assets/ha-context-explorer-logo.png" alt="HA Context Explorer logo" width="180">
+</p>
+
 A separate experimental Home Assistant custom integration with its own sidebar UI.
 
 This is **not** a continuation of `ha-ai-context-exporter`. It is a clean exploration of a different architecture direction:
@@ -116,7 +120,10 @@ Current distribution posture:
 - release-based updates with Git tags are the intended future direction
 - no GitHub release or tag has been created by this documentation step
 - this is not a HACS default-store submission
-- full HACS compliance is not claimed yet; brand assets, validation automation, and release publishing still need a later pass
+- an initial placeholder project logo is present for repository presentation
+- full HACS compliance is not claimed yet; integration brand assets, validation automation, and release publishing still need a later pass
+
+The logo at `docs/assets/ha-context-explorer-logo.png` is provisional placeholder branding for repository presentation. It is not a complete Home Assistant/HACS brand asset set.
 
 The integration still uses the internal compatibility domain and folder name `ha_context_explorer_probe`. That is expected for now; the user-facing name is **HA Context Explorer**.
 
@@ -150,6 +157,25 @@ Expected future/manual test path:
 
 If the integration does not appear after installation, restart Home Assistant and clear the browser cache before retesting.
 
+### HACS custom repository test checklist
+
+Use this as a manual validation checklist before presenting HACS as a comfortable install path:
+
+- Add `https://github.com/wdani/ha-context-explorer` as a HACS custom repository.
+- Select category **Integration**.
+- Confirm HACS accepts the repository metadata.
+- Install the integration through HACS.
+- Restart Home Assistant if HACS or Home Assistant asks for it.
+- Confirm **HA Context Explorer** appears in **Settings -> Devices & Services**.
+- Add the integration and confirm the sidebar panel appears.
+- Confirm the panel reports the expected version.
+- Confirm Overview and at least one additional protected scope load for an admin user.
+- Confirm Developer Workbench remains admin-only and local-only.
+- Check Home Assistant logs for import, frontend asset, auth, or panel registration errors.
+- Check whether HACS reports update information as expected for the current branch or future release.
+
+This checklist is for custom repository testing only. It is not a HACS default-store submission checklist.
+
 ## Updates
 
 ### Manual update
@@ -162,12 +188,25 @@ If the integration does not appear after installation, restart Home Assistant an
 
 The intended update direction is HACS custom repository usage backed by GitHub releases with version tags. HACS can use the default branch when releases are not published, but release-based updates should provide a cleaner user experience once the project is ready. Tags alone are not treated here as the finished update channel; a future release should publish a proper GitHub release.
 
+Future release checklist:
+
+- Decide whether the change affects runtime, install behavior, or only docs/metadata.
+- Bump the integration version only when the change justifies a user-visible release.
+- Update `CHANGELOG.md`.
+- Update `review_bundle.md` with validation results.
+- Confirm `custom_components/ha_context_explorer_probe/manifest.json` and `const.py` agree on the version.
+- Run syntax, manifest, safety, and reference-data checks.
+- Create a Git tag matching the release version.
+- Create a GitHub Release from that tag with concise release notes.
+- Test HACS custom repository install/update behavior against the release.
+
 Not done yet:
 
 - no GitHub release created
 - no tag created
 - no release automation added
 - no HACS default-store submission
+- no complete Home Assistant/HACS brand asset validation
 - no claim of full HACS compliance across all current checks
 
 ## Validation status
