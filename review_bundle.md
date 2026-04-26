@@ -54,7 +54,7 @@ Get-Content -Path .git\HEAD
 Result:
 
 ```text
-ref: refs/heads/main
+ref: refs/heads/distribution-release-hacs-polish
 ```
 
 Repository structure:
@@ -84,14 +84,10 @@ hacs.json and manifest.json parse successfully.
 
 Logo asset:
 
-```powershell
-Add-Type -AssemblyName System.Drawing; $img=[System.Drawing.Image]::FromFile('C:\dev\ha-context-explorer-probe\docs\assets\ha-context-explorer-logo.png'); try { "$($img.Width)x$($img.Height)" } finally { $img.Dispose() }
-```
-
 Result:
 
 ```text
-1024x1024
+docs/assets/ha-context-explorer-logo.png - 1024x1024
 ```
 
 Version alignment:
