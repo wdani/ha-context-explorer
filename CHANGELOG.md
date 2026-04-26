@@ -5,6 +5,8 @@
 - Added minimal HACS custom repository starter metadata with root `hacs.json`.
 - Updated integration documentation and issue tracker metadata to point at `wdani/ha-context-explorer`.
 - Clarified README installation and update paths for manual installs, HACS custom repository testing, and future release-based updates.
+- Added the provisional HA Context Explorer logo to the README from `docs/assets/ha-context-explorer-logo.png`.
+- Added manual release/tag workflow guidance and a HACS custom repository test checklist.
 - Kept integration version at `0.4.1` because no runtime behavior changed.
 
 ## 0.4.1

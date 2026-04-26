@@ -31,7 +31,7 @@
 - Native custom panel lifecycle and empty-wrapper recovery hardening for reconnect/remount/internal navigation/visibility-return cases
 - Developer Workbench foundation with admin-only enablement, browser-local enabled-state persistence, Review/Payload/Runtime/Privacy/Actions panes, semantic rendered review exports, transcript exports, sanitized payload inspection, privacy/masking diagnostics, bounded runtime event log, and a placeholder Dev Actions plane
 - Live-test Workbench polish for clipboard-unavailable handling, aggregated repeated render events, and a subtler admin-only Workbench toggle icon
-- Minimal HACS custom repository starter metadata and clearer manual/HACS/update documentation
+- Minimal HACS custom repository starter metadata, provisional README logo, release checklist, HACS custom repository test checklist, and clearer manual/HACS/update documentation
 - Documentation and review baseline
 
 ## Confirmed Runtime State
@@ -50,7 +50,7 @@ Version `0.4.0` adds the first Developer Workbench foundation. It is a separate 
 
 Version `0.4.1` is a small live-test polish pass on that foundation. Clipboard copy actions are disabled with a calm central note when the Clipboard API is unavailable, Download JSON remains available, repeated `scope_rendered` runtime events are aggregated, and the Workbench toggle uses a subtle icon. It does not change backend scope, endpoint auth, exports, persistence, or the Dev Actions placeholder contract.
 
-The distribution-readiness starter adds root HACS metadata and documentation cleanup without changing runtime behavior or bumping the integration version. It prepares for HACS custom repository testing and a future GitHub release-based update path, but does not create a release, tag, release automation, or default-store submission.
+The distribution-readiness starter adds root HACS metadata, a provisional README logo, release/tag workflow guidance, a HACS custom repository test checklist, and documentation cleanup without changing runtime behavior or bumping the integration version. It prepares for HACS custom repository testing and a future GitHub release-based update path, but does not create a release, tag, release automation, complete brand asset set, or default-store submission.
 
 ## Not implemented
 

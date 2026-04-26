@@ -7,15 +7,18 @@ First small step toward cleaner installation/update distribution.
 Key changes:
 
 - Added root `hacs.json` with the HA Context Explorer display name and README rendering.
+- Added the provisional HA Context Explorer logo to the README from `docs/assets/ha-context-explorer-logo.png`.
 - Updated integration manifest documentation and issue tracker URLs to `wdani/ha-context-explorer`.
 - Clarified README manual install, HACS custom repository test path, manual updates, and future GitHub-release-based update direction.
+- Added a manual HACS custom repository test checklist.
+- Added a future release/tag workflow checklist.
 - Recorded that HACS readiness is a starter posture, not full default-store or release-channel completion.
 
 Important boundaries kept:
 
 - No runtime code behavior changed.
 - No version bump was made; the integration remains `0.4.1`.
-- No GitHub release, tag, release automation, HACS default-store submission, backend source expansion, UI feature, Dev Actions implementation, telemetry, or write behavior was added.
+- No GitHub release, tag, release automation, complete HACS brand asset validation, HACS default-store submission, backend source expansion, UI feature, Dev Actions implementation, telemetry, or write behavior was added.
 
 ## 0.4.1
 
